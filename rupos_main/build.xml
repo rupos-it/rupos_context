@@ -39,35 +39,41 @@
 		<attribute name="dependson" />
 		<sequential>
 			<!-- Compile the java code from ${src}-@{module} into ${build} -->
-			<javac srcdir="${src}-@{module}" destdir="${build}" nowarn="false" verbose="no" debug="true" debuglevel="lines,vars,source" deprecation="yes" source="1.6" target="1.6">
+			<javac srcdir="src" destdir="${build}" nowarn="false" verbose="no" debug="true" debuglevel="lines,vars,source" deprecation="yes" source="1.6" target="1.6">
 				<classpath>
 					<pathelement path="${build}" />
 					<pathelement path="${java.class.path}" />
 					<fileset dir=".">
 						<include name="lib/**/*.jar" />
 					</fileset>
-					<fileset dir="../prom61_origin/ProM/dist/">
+					<fileset dir="../../prom61_origin/ProM/dist/">
 						<include name="*.jar" />
 					</fileset>
-					<fileset dir="../prom61_origin/ProM/lib/">
+					<fileset dir="../../prom61_origin/ProM/lib/">
 						<include name="*.jar" />
 					</fileset>
-					<fileset dir="../prom61_origin/PetriNets/dist/">
+					<fileset dir="../../prom61_origin/PetriNets/dist/">
 						<include name="*.jar" />
 					</fileset>
 					<pathelement path="@{dependson}" />
 
-					<fileset dir="../prom61_origin/PetriNetReplayer/dist/">
+					<fileset dir="../../prom61_origin/PetriNetReplayer/dist/">
 						<include name="*.jar" />
 					</fileset>
-					<fileset dir="../prom61_origin/BPMN/dist/">
+					<fileset dir="../../prom61_origin/BPMN/dist/">
                                                 <include name="*.jar" />
                                         </fileset>
 
-					 <fileset dir="../prom61_origin/Log/dist/">
+					 <fileset dir="../../prom61_origin/Log/dist/">
                                                 <include name="*.jar" />
                                         </fileset>
-					<fileset dir="../prom61_origin/LogDialog/dist/">
+					<fileset dir="../../prom61_origin/LogDialog/dist/">
+                                                <include name="*.jar" />
+                                        </fileset>
+					<fileset dir="../../BPMNMeasures/dist/">
+                                                <include name="*.jar" />
+                                        </fileset>
+					<fileset dir="../../PetriNetReplayAnalysis/dist/">
                                                 <include name="*.jar" />
                                         </fileset>
 
@@ -110,7 +116,7 @@
 					<include name="org//processmining//@{package}//**" />
 					<exclude name="test**" />
 				</fileset>
-				<fileset dir="${src}-@{Module}">
+				<fileset dir="src">
 					<include name="org//processmining//@{package}//**" />
 					<exclude name="test**" />
 				</fileset>
@@ -147,8 +153,8 @@
 	<target name="Create ProM Javadoc" description="Generated javadoc">
 		<javadoc packagenames="org.processmining.**" useexternalfile="true" defaultexcludes="yes" destdir="${doc}" author="true" version="true" verbose="false" use="true" windowtitle="${project}">
 			<fileset dir=".">
-				<include name="src-*/**" />
-				<exclude name="src-*/test/**" />
+				<include name="src/**" />
+				<exclude name="src/test/**" />
 				<exclude name="**/*.jj" />
 				<exclude name="**/*.jjt" />
 			</fileset>

@@ -51,7 +51,7 @@ public class UI {
 
 	public static void main(String[] args) throws Exception {
 
-		if (!Boot.isLatestReleaseInstalled()) {
+		if (false && !Boot.isLatestReleaseInstalled()) {
 			Boot.setReleaseInstalled("", "");
 			PMFrame frame = (PMFrame) Boot.boot(PMFrame.class);
 			frame.setIconImage(ImageLoader.load("prom_icon_32x32.png"));

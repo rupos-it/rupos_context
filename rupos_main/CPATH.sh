@@ -4,6 +4,9 @@ PROM_ORIGIN=../../prom61_origin/ProM
 PROM_ORIGIN_BASE=../../prom61_origin
 
 CPATH=./bindist/
+CPATH=$CPATH:../../BPMNMeasures/dist/BPMNMeasures.jar
+CPATH=$CPATH:../../PetriNetReplayAnalysis/dist/PetriNetReplayAnalysis.jar
+
 CPATH=$CPATH:$PROM_ORIGIN/dist/ProM-Contexts.jar
 CPATH=$CPATH:$PROM_ORIGIN/dist/ProM-Framework.jar
 CPATH=$CPATH:$PROM_ORIGIN/dist/ProM-Models.jar
