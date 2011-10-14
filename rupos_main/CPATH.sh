@@ -1,7 +1,7 @@
 #!/bin/sh
 
-PROM_ORIGIN=../prom61_origin/ProM
-PROM_ORIGIN_BASE=../prom61_origin
+PROM_ORIGIN=../../prom61_origin/ProM
+PROM_ORIGIN_BASE=../../prom61_origin
 
 CPATH=./bindist/
 CPATH=$CPATH:$PROM_ORIGIN/dist/ProM-Contexts.jar
