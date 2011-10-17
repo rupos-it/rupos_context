@@ -23,26 +23,13 @@ import org.processmining.plugins.petrinet.replay.performance.TotalPerformanceRes
  */
 public class SampleMain {
     public static void main(String [] args) throws Exception {
-	
-    	//String logFile = "../prom5_log_files/TracceRupos.mxml";
-    	//String netFile = "../prom5_log_files/TracceRuposAlpha.pnml";
-    	//String logFile = "../prom5_log_files/InviaFlusso.mxml";
-    	//String netFile = "../prom5_log_files/InviaFlussoWoped.pnml";
-    	//String logFile = "../prom5_log_files/InviaFlusso.mxml";
-    	//String netFile = "../prom5_log_files/InviaFlussoWoped.pnml";
+
+    String pathLogFile="../../examples/";
     	
-	//String logFile = "../prom5_log_files/provepar.mxml";
-    	//String netFile = "../prom5_log_files/provepar3xProm6.pnml";
-	//String logFile = "../prom5_log_files/Export_Protocollo.xes";
-    	//String netFile = "../prom5_log_files/porva.pnml";
-	String logFile = "../prom5_log_files/wsfm.mxml";
-    	String netFile = "../prom5_log_files/residency.pnml";
-        String BpmnFile = "../prom5_log_files/Residency.xpdl";
-	//String netFile = "../prom5_log_files/ReteAdHocRicorsionePerformace3xProm6.pnml";
-        //String logFile = "../prom5_log_files/sequence.mxml";
-    	//String netFile = "../prom5_log_files/seqAlphahiddenx6.pnml";
-    	//String logFile = "../prom5_log_files/sequence.mxml";
-    	//String netFile = "../prom5_log_files/sequence_prom6.pnml";
+	String logFile = pathLogFile+"wsfm.mxml";
+    	String netFile = pathLogFile+"residency.pnml";
+        String BpmnFile = pathLogFile+"Residency.xpdl";
+	
     	
 	ProMManager manager = new ProMFactory().createManager();
 	PetriNetEngine engine = manager.createPetriNetEngine(netFile);
@@ -128,7 +115,7 @@ public class SampleMain {
 	
 	BPMNDiagramExt bpmnext = manager.getBPMNwithAnalysis(fitnesstrasl);
 	 
-	 File f = new File("/home/spagnolo1/Dropbox/Casa/pathname.xpdl");
+	 File f = new File(pathLogFile+"Conformance.xpdl");
 	 if(!f.exists()){
 		  f.createNewFile();
 	 }
@@ -142,7 +129,7 @@ public class SampleMain {
 	 
 	bpmnext = manager.getBPMNwithAnalysis(performance1);
 	 
-	 File f2 = new File("/home/spagnolo1/Dropbox/Casa/pathnamep.xpdl");
+	 File f2 = new File( pathLogFile+"Performance.xpdl");
 	 if(!f2.exists()){
 		  f2.createNewFile();
 	 }
