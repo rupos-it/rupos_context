@@ -5,6 +5,7 @@
 .project
 .settings
 bin
-javascrips/conformance.html
+javascrips/*
+dist
 bindist
 prom5_log_files
