@@ -28,6 +28,7 @@ CPATH=$CPATH:$PROM_ORIGIN/lib/jung-api-2.0.jar
 CPATH=$CPATH:$PROM_ORIGIN/lib/jung-graph-impl-2.0.jar
 CPATH=$CPATH:$PROM_ORIGIN/lib/jung-io-2.0.jar
 CPATH=$CPATH:$PROM_ORIGIN/lib/jung-visualization-2.0.jar
+CPATH=$CPATH:$PROM_ORIGIN/lib/*.jar
 CPATH=$CPATH:$PROM_ORIGIN/lib/OpenXES.jar
 CPATH=$CPATH:$PROM_ORIGIN/lib/OpenXES-XStream.jar
 CPATH=$CPATH:$PROM_ORIGIN/lib/simmetrics.jar
@@ -45,20 +46,15 @@ CPATH=$CPATH:$PROM_ORIGIN_BASE/Log/dist/Log.jar
 
 #CPATH=$CPATH:$PROM_ORIGIN_BASE/Animation/dist/Animation.jar
 CPATH=$CPATH:$PROM_ORIGIN_BASE/InteractiveVisualization/dist/InteractiveVisualization.jar
+CPATH=$CPATH:$PROM_ORIGIN_BASE/LogDialog/dist/LogDialog.jar
 
 
 CPATH=$CPATH:$PROM_ORIGIN_BASE/OSService/dist/OSService.jar
-#CPATH=$CPATH:$PROM_ORIGIN_BASE/TransitionSystems/dist/TransitionSystems.jar
-CPATH=$CPATH:$PROM_ORIGIN_BASE/PetriNets/dist/PetriNets.jar
-#CPATH=$CPATH:$PROM_ORIGIN_BASE/LogAbstractions/dist/LogAbstractions.jar
-#CPATH=$CPATH:$PROM_ORIGIN_BASE/AlphaMiner/dist/AlphaMiner.jar
-
-#CPATH=$CPATH:$PROM_ORIGIN_BASE/ETConformance/lib/javailp-1.1.jar
-#CPATH=$CPATH:$PROM_ORIGIN_BASE/ETConformance/dist/ETConformance.jar
 
 CPATH=$CPATH:$PROM_ORIGIN_BASE/BPMN/dist/BPMN.jar
 
-CPATH=$CPATH:$PROM_ORIGIN_BASE/LogDialog/dist/LogDialog.jar
+CPATH=$CPATH:$PROM_ORIGIN_BASE/PetriNets/dist/PetriNets.jar
+
 CPATH=$CPATH:$PROM_ORIGIN_BASE/PetriNetReplayer/dist/PetriNetReplayer.jar
 
 #CPATH=$CPATH:$PROM_ORIGIN_BASE/Performance/dist/Performance.jar
