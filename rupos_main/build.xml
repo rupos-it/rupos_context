@@ -113,12 +113,10 @@
 			<!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
 			<jar jarfile="${dist}/${project}-@{module}-${DSTAMP}.jar">
 				<fileset dir="${build}">
-					<include name="org//processmining//@{package}//**" />
-					<exclude name="test**" />
+					<include name="**" />
 				</fileset>
 				<fileset dir="src">
-					<include name="org//processmining//@{package}//**" />
-					<exclude name="test**" />
+					<include name="**" />
 				</fileset>
 				<manifest>
 					<attribute name="Built-By" value="${user.name}" />
