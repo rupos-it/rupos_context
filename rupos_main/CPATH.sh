@@ -40,11 +40,11 @@ CPATH=$CPATH:$PROM_ORIGIN/lib/weka.jar
 CPATH=$CPATH:$PROM_ORIGIN/lib/xpp3-1.1.4c.jar
 CPATH=$CPATH:$PROM_ORIGIN/lib/xstream-1.3.1.jar
 
-#CPATH=$CPATH:$PROM_ORIGIN_BASE/Log/dist/LogFilters.jar
+#CPATH=$CPATH:$PROM_ORIGIN_BASE/LogFilters/dist/LogFilters.jar
 CPATH=$CPATH:$PROM_ORIGIN_BASE/Log/dist/Log.jar
 
-CPATH=$CPATH:$PROM_ORIGIN_BASE/Log/dist/Animation.jar
-CPATH=$CPATH:$PROM_ORIGIN_BASE/Log/dist/InteractiveVisualization.jar
+#CPATH=$CPATH:$PROM_ORIGIN_BASE/Animation/dist/Animation.jar
+CPATH=$CPATH:$PROM_ORIGIN_BASE/InteractiveVisualization/dist/InteractiveVisualization.jar
 
 
 CPATH=$CPATH:$PROM_ORIGIN_BASE/OSService/dist/OSService.jar
