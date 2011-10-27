@@ -29,7 +29,7 @@ public class SampleMain {
 	String logFile = pathLogFile+"wsfm.mxml";
     	String netFile = pathLogFile+"residency.pnml";
         String BpmnFile = pathLogFile+"Residency.xpdl";
-	
+        String BPMNOGM = pathLogFile+"prova.error.bpmn";
     	
 	ProMManager manager = new ProMFactory().createManager();
 	PetriNetEngine engine = manager.createPetriNetEngine(netFile);
@@ -93,6 +93,9 @@ public class SampleMain {
 
 
 	//traslate BPMN to  PN
+	BPMNDiagram bpmnx = manager.openBpmnfromOMGS(BPMNOGM);
+	System.out.println("T " + bpmnx);
+
 
 	BPMNDiagram bpmn = manager.openBpmn(BpmnFile);
 	//Petrinet pne = manager.getBpmntoPn(bpmn);

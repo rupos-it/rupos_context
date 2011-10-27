@@ -54,6 +54,7 @@ public class ProMManager {
 	PluginDescriptor BpmnPlugin = null;
 	PluginDescriptor performancewithMarkingPlugin= null;
 	PluginDescriptor BPMNMeasureswithAnalisysDetails= null;
+	PluginDescriptor BPMNImport= null;
 	
 	CLIContext globalContext = null;
 	PluginContext context = null;
@@ -91,7 +92,9 @@ public class ProMManager {
 			else if ("BPMNMeasureswithAnalisysDetails".equals(plugin.getName()))
 				BPMNMeasureswithAnalisysDetails = plugin;
 			else if ("XPDL export (Bussines Notation with Artifact)".equals(plugin.getName()))
-				BPMNexport  = plugin;//
+				BPMNexport  = plugin;
+			else if ("Import BPMN model from BPMN 2.0 file".equals(plugin.getName()))
+				BPMNImport  = plugin;//
 			else
 				continue;
 			if (false) {
@@ -143,7 +146,10 @@ public class ProMManager {
 		}
 		if (BPMNexport == null) {
 			System.out.println("XPDL export (Bussines Notation with Artifact) not found");
-		}
+		}//
+		if (BPMNImport == null) {
+			System.out.println("Import BPMN model from BPMN 2.0 file not found");
+		}//BPMNImport
 		context = context.createChildContext("MainContext");
 
 		System.out.println("End Initializazion 1");
@@ -426,6 +432,7 @@ public class ProMManager {
 		//context1.getParentContext().deleteChild(context1);
 		return res;
 	}
+	
 	public BPMNDiagram openBpmn(String BpmnFile) throws ExecutionException,
 	InterruptedException {
 		System.out.println("------------------------------");
@@ -433,6 +440,19 @@ public class ProMManager {
 		System.out.println("------------------------------");
 		PluginContext context1 = context.createChildContext("Result of Import");
 		OpenBpmnPlugin.invoke(0, context1, BpmnFile);
+		context1.getResult().synchronize();
+		BPMNDiagram res = (BPMNDiagram) context1.getResult().getResult(0);
+		//context1.getParentContext().deleteChild(context1);
+		return res;
+	}
+	
+	public BPMNDiagram openBpmnfromOMGS(String BpmnFile) throws ExecutionException,
+	InterruptedException {
+		System.out.println("------------------------------");
+		System.out.println("Open BPMN from OMG serial");
+		System.out.println("------------------------------");
+		PluginContext context1 = context.createChildContext("Result of Import");
+		BPMNImport.invoke(0, context1, BpmnFile);
 		context1.getResult().synchronize();
 		BPMNDiagram res = (BPMNDiagram) context1.getResult().getResult(0);
 		//context1.getParentContext().deleteChild(context1);
