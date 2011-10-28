@@ -1,6 +1,8 @@
 package it.unipi.rupos.processmining;
 
 import java.io.File;
+import java.util.List;
+
 import org.processmining.models.graphbased.directed.bpmn.BPMNDiagram;
 import org.processmining.models.graphbased.directed.bpmn.BPMNDiagramExt;
 import org.processmining.models.graphbased.directed.petrinet.Petrinet;
@@ -9,6 +11,7 @@ import org.processmining.contexts.cli.ProMFactory;
 import org.processmining.contexts.cli.ProMManager;
 import org.deckfour.xes.model.XLog;
 import org.deckfour.xes.model.XTrace;
+import org.processmining.plugins.bpmn.exporting.metrics.BPMNConfMetrics;
 import org.processmining.plugins.petrinet.replay.ReplayAction;
 import org.processmining.plugins.petrinet.replayfitness.ReplayFitnessSetting;
 import org.processmining.plugins.petrinet.replay.conformance.PNVisualizzeJS;
@@ -114,7 +117,12 @@ public class SampleMain {
 		
 	TotalConformanceResult fitnesstrasl = manager.getConformance(pn.net, logs, settings2,pn.marking);
 	
-	System.out.println(fitnesstrasl);
+	//System.out.println(fitnesstrasl);
+	
+	List<BPMNConfMetrics> list = manager.getBPMNMetrics(fitnesstrasl);
+	System.out.println(list.toString());
+	if(true)
+		return;
 	
 	BPMNDiagramExt bpmnext = manager.getBPMNwithAnalysis(fitnesstrasl);
 	 

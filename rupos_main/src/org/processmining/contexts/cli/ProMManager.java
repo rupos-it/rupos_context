@@ -1,5 +1,6 @@
 package org.processmining.contexts.cli;
 
+import java.util.List;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.io.File;
@@ -26,6 +27,7 @@ import org.deckfour.xes.model.XTrace;
 import org.deckfour.xes.model.impl.XAttributeMapImpl;
 import org.deckfour.xes.model.impl.XLogImpl;
 
+import org.processmining.plugins.bpmn.exporting.metrics.BPMNConfMetrics;
 import org.processmining.plugins.petrinet.replayfitness.ReplayFitnessSetting;
 
 
@@ -55,6 +57,7 @@ public class ProMManager {
 	PluginDescriptor performancewithMarkingPlugin= null;
 	PluginDescriptor BPMNMeasureswithAnalisysDetails= null;
 	PluginDescriptor BPMNImport= null;
+	PluginDescriptor BPMNmetrics= null;
 	
 	CLIContext globalContext = null;
 	PluginContext context = null;
@@ -95,6 +98,8 @@ public class ProMManager {
 				BPMNexport  = plugin;
 			else if ("Import BPMN model from BPMN 2.0 file".equals(plugin.getName()))
 				BPMNImport  = plugin;//
+			else if ("BPMNMAnalisysDetailsintoMetricsConformance".equals(plugin.getName()))
+				BPMNmetrics  = plugin;//
 			else
 				continue;
 			if (false) {
@@ -150,6 +155,9 @@ public class ProMManager {
 		if (BPMNImport == null) {
 			System.out.println("Import BPMN model from BPMN 2.0 file not found");
 		}//BPMNImport
+		if (BPMNmetrics == null) {
+			System.out.println("BPMNM Analisys Details into Metrics Conformance not found");
+		}
 		context = context.createChildContext("MainContext");
 
 		System.out.println("End Initializazion 1");
@@ -397,6 +405,19 @@ public class ProMManager {
 		//context1.getParentContext().deleteChild(context1);
 		return res;
 	}
+	
+	public List<BPMNConfMetrics> getBPMNMetrics(TotalConformanceResult tcr) throws CancellationException, ExecutionException, InterruptedException{
+		System.out.println("------------------------------");
+		System.out.println("BPMN Metrics Conformance analysis ");
+		System.out.println("------------------------------");
+		PluginContext context1 = context.createChildContext("Calc Conformance");
+		BPMNmetrics.invoke(0, context1, tcr);
+		context1.getResult().synchronize();
+		List<BPMNConfMetrics>  res = (List<BPMNConfMetrics> ) context1.getResult().getResult(0);
+		//context1.getParentContext().deleteChild(context1);
+		return res;
+	}
+	
 	
 	public BPMNDiagramExt getBPMNwithAnalysis(Petrinet pn , ConformanceResult tcr) throws CancellationException, ExecutionException, InterruptedException{
 		System.out.println("------------------------------");
