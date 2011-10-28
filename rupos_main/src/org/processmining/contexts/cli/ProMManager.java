@@ -28,6 +28,7 @@ import org.deckfour.xes.model.impl.XAttributeMapImpl;
 import org.deckfour.xes.model.impl.XLogImpl;
 
 import org.processmining.plugins.bpmn.exporting.metrics.BPMNConfMetrics;
+import org.processmining.plugins.bpmn.exporting.metrics.BPMNPerfMetrics;
 import org.processmining.plugins.petrinet.replayfitness.ReplayFitnessSetting;
 
 
@@ -57,8 +58,9 @@ public class ProMManager {
 	PluginDescriptor performancewithMarkingPlugin= null;
 	PluginDescriptor BPMNMeasureswithAnalisysDetails= null;
 	PluginDescriptor BPMNImport= null;
-	PluginDescriptor BPMNmetrics= null;
-	
+	PluginDescriptor BPMNMetricsConf= null;
+	PluginDescriptor BPMNMetricsPerf= null;
+
 	CLIContext globalContext = null;
 	PluginContext context = null;
 	private PluginDescriptor BPMNexport = null;
@@ -99,8 +101,10 @@ public class ProMManager {
 			else if ("Import BPMN model from BPMN 2.0 file".equals(plugin.getName()))
 				BPMNImport  = plugin;//
 			else if ("BPMNMAnalisysDetailsintoMetricsConformance".equals(plugin.getName()))
-				BPMNmetrics  = plugin;//
-			else
+				BPMNMetricsConf  = plugin;//
+			else if ("BPMNMAnalisysDetailsintoMetricsPerformance".equals(plugin.getName()))
+				BPMNMetricsPerf  = plugin;//
+			else 
 				continue;
 			if (false) {
 				System.out.println(plugin.getName());
@@ -155,9 +159,13 @@ public class ProMManager {
 		if (BPMNImport == null) {
 			System.out.println("Import BPMN model from BPMN 2.0 file not found");
 		}//BPMNImport
-		if (BPMNmetrics == null) {
-			System.out.println("BPMNM Analisys Details into Metrics Conformance not found");
+		if (BPMNMetricsConf == null) {
+			System.out.println("BPMN Analisys Details into Metrics Conformance not found");
 		}
+		if (BPMNMetricsPerf== null) {
+			System.out.println("BPMN Analisys Details into Metrics Performance not found");
+		}
+		
 		context = context.createChildContext("MainContext");
 
 		System.out.println("End Initializazion 1");
@@ -171,7 +179,7 @@ public class ProMManager {
 	 * @throws InterruptedException
 	 */
 	public PetriNetEngine createPetriNetEngine(String petriNetFile)
-	throws ExecutionException, InterruptedException {
+			throws ExecutionException, InterruptedException {
 		System.out.println("------------------------------");
 		System.out.println("Import Net");
 		System.out.println("------------------------------");
@@ -203,7 +211,7 @@ public class ProMManager {
 		System.out.println("Open Log");
 		System.out.println("------------------------------");
 		PluginContext context1 = context
-		.createChildContext("Result of Import Log Error");
+				.createChildContext("Result of Import Log Error");
 		openLogPlugin.invoke(0, context1, logFile);
 		context1.getResult().synchronize();
 		XLog res = (XLog) context1.getResult().getResult(0);
@@ -219,7 +227,7 @@ public class ProMManager {
 	 * @throws InterruptedException
 	 */
 	public ReplayFitnessSetting suggestSettings(Petrinet net, XLog log)
-	throws ExecutionException, InterruptedException {
+			throws ExecutionException, InterruptedException {
 		System.out.println("------------------------------");
 		System.out.println("Suggest settings");
 		System.out.println("------------------------------");
@@ -227,7 +235,7 @@ public class ProMManager {
 		suggestPlugin.invoke(0, context1, log, net);
 		context1.getResult().synchronize();
 		ReplayFitnessSetting res = (ReplayFitnessSetting) context1.getResult()
-		.getResult(0);
+				.getResult(0);
 		context1.getParentContext().deleteChild(context1);
 		return res;
 	}
@@ -260,7 +268,7 @@ public class ProMManager {
 		//context1.getParentContext().deleteChild(context1);
 		return fitness;
 	}
-	
+
 	public TotalConformanceResult getConformance(Petrinet net, XLog log,
 			ReplayFitnessSetting settings, Marking marking) throws ExecutionException,
 			InterruptedException {
@@ -297,7 +305,7 @@ public class ProMManager {
 		System.out.println("Performance Details");
 		System.out.println("------------------------------");
 		PluginContext context1 = context
-		.createChildContext("Performance Checking");
+				.createChildContext("Performance Checking");
 
 		performancePlugin.invoke(0, context1, log, net, settings);
 		context1.getResult().synchronize();
@@ -319,9 +327,9 @@ public class ProMManager {
 		System.out.println("Performance Details");
 		System.out.println("------------------------------");
 		PluginContext context1 = context
-		.createChildContext("Performance Checking");
-		 XLog log = new XLogImpl(new XAttributeMapImpl());
-	 	 log.add(trace);
+				.createChildContext("Performance Checking");
+		XLog log = new XLogImpl(new XAttributeMapImpl());
+		log.add(trace);
 
 		performancewithMarkingPlugin.invoke(0, context1, log, net, settings, marking);
 		context1.getResult().synchronize();
@@ -342,8 +350,8 @@ public class ProMManager {
 		System.out.println("Performance Details");
 		System.out.println("------------------------------");
 		PluginContext context1 = context
-		.createChildContext("Performance Checking");
-		
+				.createChildContext("Performance Checking");
+
 
 		performancewithMarkingPlugin.invoke(0, context1, log, net, settings, marking);
 		context1.getResult().synchronize();
@@ -364,11 +372,11 @@ public class ProMManager {
 		System.out.println("Performance Details");
 		System.out.println("------------------------------");
 		PluginContext context1 = context
-		.createChildContext("Performance Checking");
-		 XLog log = new XLogImpl(new XAttributeMapImpl());
-	 	 log.add(trace);
+				.createChildContext("Performance Checking");
+		XLog log = new XLogImpl(new XAttributeMapImpl());
+		log.add(trace);
 
-	 	performancePlugin.invoke(0, context1, log, net, settings);
+		performancePlugin.invoke(0, context1, log, net, settings);
 		context1.getResult().synchronize();
 		System.out.println("------------------------------");
 		PluginExecutionResult res2 = context1.getResult();
@@ -405,20 +413,20 @@ public class ProMManager {
 		//context1.getParentContext().deleteChild(context1);
 		return res;
 	}
-	
+
 	public List<BPMNConfMetrics> getBPMNMetrics(TotalConformanceResult tcr) throws CancellationException, ExecutionException, InterruptedException{
 		System.out.println("------------------------------");
 		System.out.println("BPMN Metrics Conformance analysis ");
 		System.out.println("------------------------------");
 		PluginContext context1 = context.createChildContext("Calc Conformance");
-		BPMNmetrics.invoke(0, context1, tcr);
+		BPMNMetricsConf.invoke(0, context1, tcr);
 		context1.getResult().synchronize();
 		List<BPMNConfMetrics>  res = (List<BPMNConfMetrics> ) context1.getResult().getResult(0);
 		//context1.getParentContext().deleteChild(context1);
 		return res;
 	}
-	
-	
+
+
 	public BPMNDiagramExt getBPMNwithAnalysis(Petrinet pn , ConformanceResult tcr) throws CancellationException, ExecutionException, InterruptedException{
 		System.out.println("------------------------------");
 		System.out.println("BPMN with conformance analysis ");
@@ -442,6 +450,18 @@ public class ProMManager {
 		return res;
 	}
 	
+	public List<BPMNPerfMetrics> getBPMNMetrics(TotalPerformanceResult tcr) throws CancellationException, ExecutionException, InterruptedException{
+		System.out.println("------------------------------");
+		System.out.println("BPMN with performance analysis ");
+		System.out.println("------------------------------");
+		PluginContext context1 = context.createChildContext("Calc Performance");
+		BPMNMetricsPerf.invoke(0, context1, tcr);
+		context1.getResult().synchronize();
+		List<BPMNPerfMetrics> res = (List<BPMNPerfMetrics>) context1.getResult().getResult(0);
+		//context1.getParentContext().deleteChild(context1);
+		return res;
+	}
+
 	public BPMNDiagramExt getBPMNwithAnalysis(Petrinet pn , PerformanceResult tcr) throws CancellationException, ExecutionException, InterruptedException{
 		System.out.println("------------------------------");
 		System.out.println("BPMN with performance analysis ");
@@ -453,7 +473,7 @@ public class ProMManager {
 		//context1.getParentContext().deleteChild(context1);
 		return res;
 	}
-	
+
 	public BPMNDiagram openBpmn(String BpmnFile) throws ExecutionException,
 	InterruptedException {
 		System.out.println("------------------------------");
@@ -466,7 +486,7 @@ public class ProMManager {
 		//context1.getParentContext().deleteChild(context1);
 		return res;
 	}
-	
+
 	public BPMNDiagram openBpmnfromOMGS(String BpmnFile) throws ExecutionException,
 	InterruptedException {
 		System.out.println("------------------------------");
@@ -489,7 +509,7 @@ public class ProMManager {
 		context1.getResult().synchronize();
 		context1.getResult().getResult(0);
 		//context1.getParentContext().deleteChild(context1);
-		
+
 	}
 	public void closeContext() {
 		// for ( PluginContext c:

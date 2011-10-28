@@ -12,6 +12,7 @@ import org.processmining.contexts.cli.ProMManager;
 import org.deckfour.xes.model.XLog;
 import org.deckfour.xes.model.XTrace;
 import org.processmining.plugins.bpmn.exporting.metrics.BPMNConfMetrics;
+import org.processmining.plugins.bpmn.exporting.metrics.BPMNPerfMetrics;
 import org.processmining.plugins.petrinet.replay.ReplayAction;
 import org.processmining.plugins.petrinet.replayfitness.ReplayFitnessSetting;
 import org.processmining.plugins.petrinet.replay.conformance.PNVisualizzeJS;
@@ -121,8 +122,7 @@ public class SampleMain {
 	
 	List<BPMNConfMetrics> list = manager.getBPMNMetrics(fitnesstrasl);
 	System.out.println(list.toString());
-	if(true)
-		return;
+	
 	
 	BPMNDiagramExt bpmnext = manager.getBPMNwithAnalysis(fitnesstrasl);
 	 
@@ -135,6 +135,13 @@ public class SampleMain {
 	settings2.setAction(ReplayAction.INSERT_DISABLED_MATCH, false);
 	 
 	TotalPerformanceResult performance1 = manager.getPerformance(pn.net, logs, settings2,pn.marking);
+	
+	List<BPMNPerfMetrics> listperf = manager.getBPMNMetrics(performance1);
+	System.out.println(listperf.toString());
+	if(true)
+		return;
+	
+	
 	System.out.println("Performance: " + performance1);
 	System.out.println("Performance:0 " +performance1.getListperformance().get(0));
 	 
