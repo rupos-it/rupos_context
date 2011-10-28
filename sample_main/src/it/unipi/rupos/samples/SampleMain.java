@@ -1,6 +1,7 @@
 package it.unipi.rupos.samples;
 
 import java.io.File;
+import java.util.List;
 
 import it.unipi.rupos.processmining.PetriNetEngine;
 
@@ -9,6 +10,8 @@ import org.processmining.contexts.cli.ProMFactory;
 import org.processmining.contexts.cli.ProMManager;
 import org.processmining.models.graphbased.directed.bpmn.BPMNDiagram;
 import org.processmining.models.graphbased.directed.bpmn.BPMNDiagramExt;
+import org.processmining.plugins.bpmn.exporting.metrics.BPMNConfMetrics;
+import org.processmining.plugins.bpmn.exporting.metrics.BPMNPerfMetrics;
 import org.processmining.plugins.petrinet.replay.ReplayAction;
 import org.processmining.plugins.petrinet.replay.conformance.TotalConformanceResult;
 import org.processmining.plugins.petrinet.replay.performance.TotalPerformanceResult;
@@ -44,24 +47,33 @@ public class SampleMain {
 		settings.setAction(ReplayAction.INSERT_DISABLED_MISMATCH, false);
 		
 		TotalConformanceResult conformance = engine.getFitness(log, settings);
-		BPMNDiagramExt bpmnext = manager.getBPMNwithAnalysis(conformance);
+		
+		List<BPMNConfMetrics> metricconf = manager.getBPMNMetrics(conformance);
+		
+		System.out.println(metricconf);
+		/*BPMNDiagramExt bpmnext = manager.getBPMNwithAnalysis(conformance);
 		 
 		 File f = new File(pathLogFile+"Conformance.xpdl");
 		 if(!f.exists()){
 			  f.createNewFile();
 		 }
-		 manager.writefilebpmn(f, bpmnext);
+		 manager.writefilebpmn(f, bpmnext);*/
 
 		 settings.setAction(ReplayAction.INSERT_DISABLED_MATCH, false);
 		 
 		 TotalPerformanceResult performance = engine.getPerformance(log, settings);
-		 bpmnext = manager.getBPMNwithAnalysis(performance);
+		 
+		 List<BPMNPerfMetrics> metricperf= manager.getBPMNMetrics(performance);
+		 
+		 System.out.println(metricperf);
+		 
+		 /*bpmnext = manager.getBPMNwithAnalysis(performance);
 		 
 		 File f2 = new File( pathLogFile+"Performance.xpdl");
 		 if(!f2.exists()){
 			  f2.createNewFile();
 		 }
-		 manager.writefilebpmn(f2, bpmnext);
+		 manager.writefilebpmn(f2, bpmnext);*/
 		
 
 		manager.closeContext();
