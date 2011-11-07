@@ -1,5 +1,6 @@
 package org.processmining.contexts.cli;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
@@ -22,9 +23,14 @@ import org.processmining.models.graphbased.directed.bpmn.BPMNDiagram;
 import org.processmining.models.graphbased.directed.bpmn.BPMNDiagramExt;
 import org.processmining.models.graphbased.directed.petrinet.Petrinet;
 import org.processmining.models.semantics.petrinet.Marking;
+import org.deckfour.xes.model.XEvent;
+import org.deckfour.xes.model.impl.XEventImpl;
+import org.deckfour.xes.model.XAttributeMap;
 import org.deckfour.xes.model.XLog;
 import org.deckfour.xes.model.XTrace;
+import org.deckfour.xes.model.impl.XAttributeLiteralImpl;
 import org.deckfour.xes.model.impl.XAttributeMapImpl;
+import org.deckfour.xes.model.impl.XAttributeTimestampImpl;
 import org.deckfour.xes.model.impl.XLogImpl;
 
 import org.processmining.plugins.bpmn.exporting.metrics.BPMNConfMetrics;
@@ -60,6 +66,8 @@ public class ProMManager {
 	PluginDescriptor BPMNImport= null;
 	PluginDescriptor BPMNMetricsConf= null;
 	PluginDescriptor BPMNMetricsPerf= null;
+	PluginDescriptor PNArtificialEnd= null;
+	PluginDescriptor LogArtificialEnd= null;
 
 	CLIContext globalContext = null;
 	PluginContext context = null;
@@ -103,7 +111,11 @@ public class ProMManager {
 			else if ("BPMNMAnalisysDetailsintoMetricsConformance".equals(plugin.getName()))
 				BPMNMetricsConf  = plugin;//
 			else if ("BPMNMAnalisysDetailsintoMetricsPerformance".equals(plugin.getName()))
-				BPMNMetricsPerf  = plugin;//
+				BPMNMetricsPerf  = plugin;//PNArtificialEnd
+			else if ("Add Artificial End Transition Variant".equals(plugin.getName()))
+				PNArtificialEnd = plugin;//
+			else if ("Add Artificial End Event Filter".equals(plugin.getName()))
+				LogArtificialEnd = plugin;//
 			else 
 				continue;
 			if (false) {
@@ -158,9 +170,15 @@ public class ProMManager {
 		}//
 		if (BPMNImport == null) {
 			System.out.println("Import BPMN model from BPMN 2.0 file not found");
-		}//BPMNImport
+		}//
 		if (BPMNMetricsConf == null) {
 			System.out.println("BPMN Analisys Details into Metrics Conformance not found");
+		}
+		if (PNArtificialEnd == null) {
+			System.out.println("Add Artificial End Transition Variant not found");
+		}
+		if (LogArtificialEnd == null) {
+			System.out.println("Add Artificial End Event Filter not found");
 		}
 		if (BPMNMetricsPerf== null) {
 			System.out.println("BPMN Analisys Details into Metrics Performance not found");
@@ -320,6 +338,75 @@ public class ProMManager {
 		return performance;
 	}
 
+	public XLog getLogwithArtificialend( XLog log) throws CancellationException,
+			ExecutionException, InterruptedException {
+		System.out.println("------------------------------");
+		System.out.println("Performance Details");
+		System.out.println("------------------------------");
+		PluginContext context1 = context
+				.createChildContext("Performance Checking");
+		
+		XEvent end_event = makeEvent(log);
+
+
+		LogArtificialEnd.invoke(0, context1, log, end_event);
+		context1.getResult().synchronize();
+		System.out.println("------------------------------");
+		PluginExecutionResult res2 = context1.getResult();
+		System.out.println("Obtained " + res2.getSize() + " results");
+		System.out.println("------------------------------");
+		XLog newlog = res2.getResult(0);
+		System.out.println("------------------------------");
+
+		//context1.getParentContext().deleteChild(context1);
+		return newlog;
+	}
+	
+	private XEvent makeEvent(XLog log) {
+		Date time = new Date();
+		XTrace oldTrace = log.get(log.size()-1);
+		try {
+			time = ((XAttributeTimestampImpl) oldTrace.get(oldTrace.size() - 1).getAttributes()
+					.get("time:timestamp")).getValue();
+			time.setTime(time.getTime() + 1);
+		} catch (Exception ex) {}
+		XAttributeMap attMap = new XAttributeMapImpl();
+		putLiteral(attMap, "concept:name", "ArtificialEnd");
+		putLiteral(attMap, "lifecycle:transition", "complete");
+		putLiteral(attMap, "org:resource", "artificial");
+		putTimestamp(attMap, "time:timestamp", time);
+		XEvent newEvent = new XEventImpl(attMap);
+		return newEvent;
+	}
+	
+	private void putLiteral(XAttributeMap attMap, String key, String value) {
+		attMap.put(key, new XAttributeLiteralImpl(key, value));
+	}
+
+	private void putTimestamp(XAttributeMap attMap, String key, Date value) {
+		attMap.put(key, new XAttributeTimestampImpl(key, value));
+	}
+	
+	public PetriNetEngine getPNwithArtificialEnd(Petrinet net) throws CancellationException,
+			ExecutionException, InterruptedException {
+		System.out.println("------------------------------");
+		System.out.println("Performance Details");
+		System.out.println("------------------------------");
+		PluginContext context1 = context
+				.createChildContext("Performance Checking");
+		
+		PNArtificialEnd.invoke(0, context1, net);
+		context1.getResult().synchronize();
+		System.out.println("------------------------------");
+		Petrinet res = (Petrinet) context1.getResult().getResult(0);
+		Marking marking= (Marking) context1.getResult().getResult(1);
+		PetriNetEngine res1 = new PetriNetEngine(this, res, marking);
+		System.out.println("Obtained " + res1 + " results");
+		System.out.println("------------------------------");
+		
+		//context1.getParentContext().deleteChild(context1);
+		return res1;
+	}
 	public TotalPerformanceResult getPerformance(Petrinet net, XTrace trace,
 			ReplayFitnessSetting settings, Marking marking) throws CancellationException,
 			ExecutionException, InterruptedException {
