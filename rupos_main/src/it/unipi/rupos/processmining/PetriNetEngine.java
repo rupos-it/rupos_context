@@ -34,8 +34,20 @@ public class PetriNetEngine {
 	this.manager = manager;
 	//this.layout = layout;
     }
+    
+    
 
-    /**Suggerisce i settings per il replay del log passato per parametro
+    public Petrinet getNet() {
+		return net;
+	}
+
+	public Marking getMarking() {
+		return marking;
+	}
+
+
+
+	/**Suggerisce i settings per il replay del log passato per parametro
      * @param log
      * @return i settaggi suggeriti
      * @throws ExecutionException

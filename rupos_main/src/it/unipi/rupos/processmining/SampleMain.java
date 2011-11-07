@@ -36,16 +36,20 @@ public class SampleMain {
         String BPMNOGM = pathLogFile+"prova.error.bpmn";
     	
 	ProMManager manager = new ProMFactory().createManager();
-	PetriNetEngine engine = manager.createPetriNetEngine(netFile);
-	System.out.println(engine);
+//	PetriNetEngine engine = manager.createPetriNetEngine(netFile);
+//	System.out.println(engine);
 
-	engine = manager.createPetriNetEngine(netFile);
-	System.out.println(engine);
+//	engine = manager.createPetriNetEngine(netFile);
+//	System.out.println(engine);
 
 	XLog log = manager.openLog(logFile);
-	System.out.println("Log size: " + log.size());
+//	System.out.println("Log size: " + log.size());
+	
+	XLog newlog = manager.getLogwithArtificialend(log);
+	
+	System.out.println("Log new: " + log);
 
-	ReplayFitnessSetting settings = engine.suggestSettings(log);
+	ReplayFitnessSetting settings = new ReplayFitnessSetting();
 	System.out.println("Settings: " + settings);
 	settings.setAction(ReplayAction.INSERT_ENABLED_MATCH, true);
 	settings.setAction(ReplayAction.INSERT_ENABLED_INVISIBLE, true);
@@ -104,19 +108,17 @@ public class SampleMain {
 	BPMNDiagram bpmn = manager.openBpmn(BpmnFile);
 	//Petrinet pne = manager.getBpmntoPn(bpmn);
 	PetriNetEngine pn = manager.getBpmntoPn(bpmn);
+	
+	PetriNetEngine newpn = manager.getPNwithArtificialEnd(pn.getNet());
 
 	System.out.println(pn.net);
-	XLog logs = manager.openLog(logFile);
+	
 
-	ReplayFitnessSetting settings2 = manager.suggestSettings(pn.net, logs);
-	settings2.setAction(ReplayAction.INSERT_ENABLED_MATCH, true);
-	settings2.setAction(ReplayAction.INSERT_ENABLED_INVISIBLE, true);
-	settings2.setAction(ReplayAction.REMOVE_HEAD, false);
-	settings2.setAction(ReplayAction.INSERT_ENABLED_MISMATCH, false);
-	settings2.setAction(ReplayAction.INSERT_DISABLED_MATCH, true);
-	settings2.setAction(ReplayAction.INSERT_DISABLED_MISMATCH, false);
+
+	settings.setAction(ReplayAction.INSERT_DISABLED_MATCH, true);
+	
 		
-	TotalConformanceResult fitnesstrasl = manager.getConformance(pn.net, logs, settings2,pn.marking);
+	TotalConformanceResult fitnesstrasl = manager.getConformance(newpn.getNet(), newlog, settings);
 	
 	//System.out.println(fitnesstrasl);
 	
@@ -132,9 +134,9 @@ public class SampleMain {
 	 }
 	 manager.writefilebpmn(f, bpmnext);
 
-	settings2.setAction(ReplayAction.INSERT_DISABLED_MATCH, false);
+	settings.setAction(ReplayAction.INSERT_DISABLED_MATCH, false);
 	 
-	TotalPerformanceResult performance1 = manager.getPerformance(pn.net, logs, settings2,pn.marking);
+	TotalPerformanceResult performance1 = manager.getPerformance(newpn.getNet(), newlog, settings);
 	
 	List<BPMNPerfMetrics> listperf = manager.getBPMNMetrics(performance1);
 	System.out.println(listperf.toString());
@@ -154,7 +156,7 @@ public class SampleMain {
 	manager.writefilebpmn(f2, bpmnext);
 	
 
-	PerformanceVisualJS js22 = new PerformanceVisualJS(manager.getPluginContext().getConnectionManager());
+	/*PerformanceVisualJS js22 = new PerformanceVisualJS(manager.getPluginContext().getConnectionManager());
 		
 	js22.generateJS("../javascrips/PerformancedaBpmn.html", pn.net, performance1.getListperformance().get(0).getList(),performance1.getListperformance().get(0).getMaparc());
 	
@@ -162,7 +164,7 @@ public class SampleMain {
 
 	PNVisualizzeJS js = new PNVisualizzeJS(manager.getPluginContext().getConnectionManager());
 	js.generateJS("../javascrips/conformance.html", pn.net, fitnesstrasl);
-
+*/
 
 	
 	manager.closeContext();

@@ -341,10 +341,10 @@ public class ProMManager {
 	public XLog getLogwithArtificialend( XLog log) throws CancellationException,
 			ExecutionException, InterruptedException {
 		System.out.println("------------------------------");
-		System.out.println("Performance Details");
+		System.out.println("Log with Artificial End");
 		System.out.println("------------------------------");
 		PluginContext context1 = context
-				.createChildContext("Performance Checking");
+				.createChildContext("LogwithArtificialend");
 		
 		XEvent end_event = makeEvent(log);
 
@@ -390,10 +390,10 @@ public class ProMManager {
 	public PetriNetEngine getPNwithArtificialEnd(Petrinet net) throws CancellationException,
 			ExecutionException, InterruptedException {
 		System.out.println("------------------------------");
-		System.out.println("Performance Details");
+		System.out.println("ArtificialEnd");
 		System.out.println("------------------------------");
 		PluginContext context1 = context
-				.createChildContext("Performance Checking");
+				.createChildContext("ArtificialEnd");
 		
 		PNArtificialEnd.invoke(0, context1, net);
 		context1.getResult().synchronize();
