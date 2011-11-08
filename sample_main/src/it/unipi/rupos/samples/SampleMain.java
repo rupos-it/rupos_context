@@ -34,8 +34,11 @@ public class SampleMain {
 		ProMManager manager = new ProMFactory().createManager();
 		BPMNDiagram bpmn = manager.openBpmn(BpmnFile);
 		PetriNetEngine engine = manager.getBpmntoPn(bpmn);
+		
+		PetriNetEngine enginewithartificialend = manager.getPNwithArtificialEnd(engine.getNet());
 
 		XLog log = manager.openLog(logFile);
+		XLog Artificialendlog = manager.getLogwithArtificialend(log);
 
 		ReplayFitnessSetting settings = engine.suggestSettings(log);
 		System.out.println("Settings: " + settings);
@@ -46,7 +49,7 @@ public class SampleMain {
 		settings.setAction(ReplayAction.INSERT_DISABLED_MATCH, true);
 		settings.setAction(ReplayAction.INSERT_DISABLED_MISMATCH, false);
 		
-		TotalConformanceResult conformance = engine.getFitness(log, settings);
+		TotalConformanceResult conformance = enginewithartificialend.getFitness(Artificialendlog, settings);
 		
 		List<BPMNConfMetrics> metricconf = manager.getBPMNMetrics(conformance);
 		
@@ -61,7 +64,7 @@ public class SampleMain {
 
 		 settings.setAction(ReplayAction.INSERT_DISABLED_MATCH, false);
 		 
-		 TotalPerformanceResult performance = engine.getPerformance(log, settings);
+		 TotalPerformanceResult performance = enginewithartificialend.getPerformance(Artificialendlog, settings);
 		 
 		 List<BPMNPerfMetrics> metricperf= manager.getBPMNMetrics(performance);
 		 
