@@ -1,6 +1,7 @@
 package org.processmining.contexts.cli;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
@@ -501,14 +502,14 @@ public class ProMManager {
 		return res;
 	}
 
-	public List<BPMNConfMetrics> getBPMNMetrics(TotalConformanceResult tcr) throws CancellationException, ExecutionException, InterruptedException{
+	public LinkedList<BPMNConfMetrics> getBPMNMetrics(TotalConformanceResult tcr) throws CancellationException, ExecutionException, InterruptedException{
 		System.out.println("------------------------------");
 		System.out.println("BPMN Metrics Conformance analysis ");
 		System.out.println("------------------------------");
 		PluginContext context1 = context.createChildContext("Calc Conformance");
 		BPMNMetricsConf.invoke(0, context1, tcr);
 		context1.getResult().synchronize();
-		List<BPMNConfMetrics>  res = (List<BPMNConfMetrics> ) context1.getResult().getResult(0);
+		LinkedList<BPMNConfMetrics>  res = (LinkedList<BPMNConfMetrics> ) context1.getResult().getResult(0);
 		//context1.getParentContext().deleteChild(context1);
 		return res;
 	}
@@ -537,14 +538,14 @@ public class ProMManager {
 		return res;
 	}
 	
-	public List<BPMNPerfMetrics> getBPMNMetrics(TotalPerformanceResult tcr) throws CancellationException, ExecutionException, InterruptedException{
+	public LinkedList<BPMNPerfMetrics> getBPMNMetrics(TotalPerformanceResult tcr) throws CancellationException, ExecutionException, InterruptedException{
 		System.out.println("------------------------------");
 		System.out.println("BPMN with performance analysis ");
 		System.out.println("------------------------------");
 		PluginContext context1 = context.createChildContext("Calc Performance");
 		BPMNMetricsPerf.invoke(0, context1, tcr);
 		context1.getResult().synchronize();
-		List<BPMNPerfMetrics> res = (List<BPMNPerfMetrics>) context1.getResult().getResult(0);
+		LinkedList<BPMNPerfMetrics> res = (LinkedList<BPMNPerfMetrics>) context1.getResult().getResult(0);
 		//context1.getParentContext().deleteChild(context1);
 		return res;
 	}

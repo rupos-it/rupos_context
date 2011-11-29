@@ -4,7 +4,7 @@ PROM_ORIGIN=../../prom61_origin/ProM
 PROM_ORIGIN_BASE=../../prom61_origin
 
 CPATH=./bindist/
-CPATH=$CPATH:../../BPMNMeasures/packagelib/saxon9he.jar
+CPATH=$CPATH:../../BPMNMeasures/lib/saxon9he.jar
 CPATH=$CPATH:../../BPMNMeasures/dist/BPMNMeasures.jar
 CPATH=$CPATH:../../PetriNetReplayAnalysis/dist/PetriNetReplayAnalysis.jar
 
