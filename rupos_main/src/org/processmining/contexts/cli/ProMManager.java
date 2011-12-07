@@ -56,13 +56,12 @@ public class ProMManager {
 	PluginDescriptor openLogPlugin = null;
 	PluginDescriptor alphaPlugin = null;
 	PluginDescriptor conformancePlugin = null;
-	PluginDescriptor conformancePluginMarki = null;
+
 	PluginDescriptor importNetPlugin = null;
 	PluginDescriptor performancePlugin = null;
 	PluginDescriptor suggestPlugin = null;
 	PluginDescriptor OpenBpmnPlugin = null;
 	PluginDescriptor BpmnPlugin = null;
-	PluginDescriptor performancewithMarkingPlugin= null;
 	PluginDescriptor BPMNMeasureswithAnalisysDetails= null;
 	PluginDescriptor BPMNImport= null;
 	PluginDescriptor BPMNMetricsConf= null;
@@ -87,9 +86,9 @@ public class ProMManager {
 				openLogPlugin = plugin;
 			else if ("Alpha Miner".equals(plugin.getName()))
 				alphaPlugin = plugin;
-			else if ("ConformanceDetailsSettings".equals(plugin.getName()))
+			else if ("PN Conformace Analysis".equals(plugin.getName()))
 				conformancePlugin = plugin;
-			else if ("PerformanceDetailsSettings".equals(plugin.getName()))
+			else if ("PN Performance Analysis".equals(plugin.getName()))
 				performancePlugin = plugin;
 			else if ("Import Petri net from PNML file".equals(plugin.getName()))
 				importNetPlugin = plugin;
@@ -99,10 +98,6 @@ public class ProMManager {
 				BpmnPlugin = plugin;
 			else if ("Import BPMN model from XPDL 2.1 file".equals(plugin.getName()))
 				OpenBpmnPlugin = plugin;
-			else if ("ConformanceDetailsSettingsWithMarking".equals(plugin.getName()))
-				conformancePluginMarki = plugin;
-			else if ("PerformanceDetailsSettingsWithMarking".equals(plugin.getName()))
-				performancewithMarkingPlugin = plugin;
 			else if ("BPMNMeasureswithAnalisysDetails".equals(plugin.getName()))
 				BPMNMeasureswithAnalisysDetails = plugin;
 			else if ("XPDL export (Bussines Notation with Artifact)".equals(plugin.getName()))
@@ -154,12 +149,8 @@ public class ProMManager {
 		if (BpmnPlugin == null) {
 			System.out.println("Plugin BpmntopnPlugin not found");
 		}
-		if (conformancePluginMarki == null) {
-			System.out.println("Plugin fitness with marking not found");
-		}
-		if (performancewithMarkingPlugin == null) {
-			System.out.println("Plugin performance with marking not found");
-		}
+		
+		
 		if (BPMNMeasureswithAnalisysDetails == null) {
 			System.out.println("Plugin BPMNMeasureswithAnalisysDetails not found");
 		}
@@ -275,7 +266,7 @@ public class ProMManager {
 		System.out.println("------------------------------");
 		PluginContext context1 = context.createChildContext("Conformance Checking");
 
-		conformancePlugin.invoke(0, context1, log, net, settings);
+		conformancePlugin.invoke(1, context1, log, net, settings);
 		context1.getResult().synchronize();
 		System.out.println("------------------------------");
 		PluginExecutionResult res2 = context1.getResult();
@@ -296,7 +287,7 @@ public class ProMManager {
 		System.out.println("------------------------------");
 		PluginContext context1 = context.createChildContext("Conformance Checking");
 
-		conformancePluginMarki.invoke(0, context1, log, net, settings,marking);
+		conformancePlugin.invoke(0, context1, log, net, settings,marking);
 		context1.getResult().synchronize();
 		System.out.println("------------------------------");
 		PluginExecutionResult res2 = context1.getResult();
@@ -419,7 +410,7 @@ public class ProMManager {
 		XLog log = new XLogImpl(new XAttributeMapImpl());
 		log.add(trace);
 
-		performancewithMarkingPlugin.invoke(0, context1, log, net, settings, marking);
+		performancePlugin.invoke(0, context1, log, net, settings, marking);
 		context1.getResult().synchronize();
 		System.out.println("------------------------------");
 		PluginExecutionResult res2 = context1.getResult();
@@ -441,7 +432,7 @@ public class ProMManager {
 				.createChildContext("Performance Checking");
 
 
-		performancewithMarkingPlugin.invoke(0, context1, log, net, settings, marking);
+		performancePlugin.invoke(0, context1, log, net, settings, marking);
 		context1.getResult().synchronize();
 		System.out.println("------------------------------");
 		PluginExecutionResult res2 = context1.getResult();
@@ -502,6 +493,7 @@ public class ProMManager {
 		return res;
 	}
 
+	@SuppressWarnings("unchecked")
 	public LinkedList<BPMNConfMetrics> getBPMNMetrics(TotalConformanceResult tcr) throws CancellationException, ExecutionException, InterruptedException{
 		System.out.println("------------------------------");
 		System.out.println("BPMN Metrics Conformance analysis ");
@@ -538,6 +530,7 @@ public class ProMManager {
 		return res;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public LinkedList<BPMNPerfMetrics> getBPMNMetrics(TotalPerformanceResult tcr) throws CancellationException, ExecutionException, InterruptedException{
 		System.out.println("------------------------------");
 		System.out.println("BPMN with performance analysis ");
