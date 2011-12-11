@@ -100,7 +100,7 @@ public class ProMManager {
 				OpenBpmnPlugin = plugin;
 			else if ("BPMNMeasureswithAnalisysDetails".equals(plugin.getName()))
 				BPMNMeasureswithAnalisysDetails = plugin;
-			else if ("XPDL export (Bussines Notation with Artifact)".equals(plugin.getName()))
+			else if ("XPDL export Bussines Notation with Artifact".equals(plugin.getName()))
 				BPMNexport  = plugin;
 			else if ("Import BPMN model from BPMN 2.0 file".equals(plugin.getName()))
 				BPMNImport  = plugin;//

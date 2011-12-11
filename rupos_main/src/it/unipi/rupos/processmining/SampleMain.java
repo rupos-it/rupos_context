@@ -15,9 +15,7 @@ import org.processmining.plugins.bpmn.exporting.metrics.BPMNConfMetrics;
 import org.processmining.plugins.bpmn.exporting.metrics.BPMNPerfMetrics;
 import org.processmining.plugins.petrinet.replay.ReplayAction;
 import org.processmining.plugins.petrinet.replayfitness.ReplayFitnessSetting;
-import org.processmining.plugins.petrinet.replay.conformance.PNVisualizzeJS;
 import org.processmining.plugins.petrinet.replay.conformance.TotalConformanceResult;
-import org.processmining.plugins.petrinet.replay.performance.PerformanceVisualJS;
 import org.processmining.plugins.petrinet.replay.performance.TotalPerformanceResult;
 
 
