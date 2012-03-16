@@ -4,6 +4,7 @@ PROM_ORIGIN=../../prom61_origin/ProM
 PROM_ORIGIN_BASE=../../prom61_origin
 
 CPATH=./bindist/
+CPATH=$CPATH:../../BPMNMeasures/packagelib/saxon9he.jar
 CPATH=$CPATH:../../BPMNMeasures/dist/BPMNMeasures.jar
 CPATH=$CPATH:../../PetriNetReplayAnalysis/dist/PetriNetReplayAnalysis.jar
 
@@ -28,6 +29,7 @@ CPATH=$CPATH:$PROM_ORIGIN/lib/jung-api-2.0.jar
 CPATH=$CPATH:$PROM_ORIGIN/lib/jung-graph-impl-2.0.jar
 CPATH=$CPATH:$PROM_ORIGIN/lib/jung-io-2.0.jar
 CPATH=$CPATH:$PROM_ORIGIN/lib/jung-visualization-2.0.jar
+CPATH=$CPATH:$PROM_ORIGIN/lib/jdom-1.0.jar
 CPATH=$CPATH:$PROM_ORIGIN/lib/*.jar
 CPATH=$CPATH:$PROM_ORIGIN/lib/OpenXES.jar
 CPATH=$CPATH:$PROM_ORIGIN/lib/OpenXES-XStream.jar
