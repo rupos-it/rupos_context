@@ -23,11 +23,11 @@ public class SampleMain {
 	public static void main(String[] args) throws Exception {
 	    String pathLogFile="../../examples/";
     	
-		String logFile = pathLogFile+"wsfm.mxml";
+	    String logFile = pathLogFile+"wsfm.mxml";
 	    String netFile = pathLogFile+"residency.pnml";
 	    String BpmnFile = pathLogFile+"Residency.xpdl";
 		
-	    	
+	    
 		ProMManager manager = new ProMFactory().createManager();
 		BPMNDiagram bpmn = manager.openBpmn(BpmnFile);
 		PetriNetEngine engine = manager.getBpmntoPn(bpmn);
@@ -58,7 +58,7 @@ public class SampleMain {
 		 bpmnext = manager.getBPMNwithAnalysis(performance);
 		 
 		 File f2 = new File( pathLogFile+"Performance.xpdl");
-		 if(!f2.exists()){
+		 if(!f2.exists()) {
 			  f2.createNewFile();
 		 }
 		 manager.writefilebpmn(f2, bpmnext);

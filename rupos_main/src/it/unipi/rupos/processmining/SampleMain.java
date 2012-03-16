@@ -11,9 +11,7 @@ import org.deckfour.xes.model.XLog;
 import org.deckfour.xes.model.XTrace;
 import org.processmining.plugins.petrinet.replay.ReplayAction;
 import org.processmining.plugins.petrinet.replayfitness.ReplayFitnessSetting;
-import org.processmining.plugins.petrinet.replay.conformance.PNVisualizzeJS;
 import org.processmining.plugins.petrinet.replay.conformance.TotalConformanceResult;
-import org.processmining.plugins.petrinet.replay.performance.PerformanceVisualJS;
 import org.processmining.plugins.petrinet.replay.performance.TotalPerformanceResult;
 
 
@@ -136,6 +134,7 @@ public class SampleMain {
 	manager.writefilebpmn(f2, bpmnext);
 	
 
+	/*
 	PerformanceVisualJS js22 = new PerformanceVisualJS(manager.getPluginContext().getConnectionManager());
 		
 	js22.generateJS("../javascrips/PerformancedaBpmn.html", pn.net, performance1.getListperformance().get(0).getList(),performance1.getListperformance().get(0).getMaparc());
@@ -144,7 +143,7 @@ public class SampleMain {
 
 	PNVisualizzeJS js = new PNVisualizzeJS(manager.getPluginContext().getConnectionManager());
 	js.generateJS("../javascrips/conformance.html", pn.net, fitnesstrasl);
-
+	*/
 
 	
 	manager.closeContext();
